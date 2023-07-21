@@ -3,7 +3,6 @@
     <head>
         <title>Figurinhas - PC Master Race Bot</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="favicon.png">
     </head>
@@ -22,7 +21,7 @@
         #div_imagens > div{
             display: flex;
         }
-        #div_imagens > div > div{
+        #div_imagens > div{
             display: grid;
             border-style: solid;
             border-color: #C1D3d3;
@@ -44,8 +43,10 @@
         <div>
             <h1 style="font-weight: bold;">Lista de Figurinhas Disponíveis</h1>
         </div>
-        <div id="div_imagens"></div>
+        <div div class="grid" id="div_imagens"></div>
     </body>
     
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script type="text/javascript" src="figurinhas.js"></script>
 </html>
