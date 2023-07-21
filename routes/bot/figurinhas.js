@@ -2,10 +2,10 @@ function consultaFigurinhas(){
     console.log("Bora");
     $("#div_imagens").html("")
     $("#div_imagens").hide()
-    fetch("http://localhost:5858/figurinhas").then( (data)=> data.json()).then( (data)=> {
+    fetch("/figurinhas").then( (data)=> data.json()).then( (data)=> {
 
     data.forEach(element => {
-        $("#div_imagens").append(`<div class='grid-item'><label>${element.split(".")[0]}</label><div class='div-image'><img src="http://localhost:5858/images/figurinhas/${element}" alt="" srcset=""/></div></div>`)
+        $("#div_imagens").append(`<div class='grid-item'><label>${element.split(".")[0]}</label><div class='div-image'><img src="/images/figurinhas/${element}" alt="" srcset=""/></div></div>`)
     }); 
 
     // jQuery
