@@ -7,12 +7,9 @@ const hpp = require('hpp')
 
 function init() {
     const app = express()
-    if( process.env.ENVIRONMENT == "PRD"){
-        app.use(helmet())
-        app.use(hpp())
-    }
-    
+    app.use(helmet())
     app.use(bodyParser.json())
+    app.use(hpp())
     app.use("/", express.static("routes"))
 
     app.listen(process.env.SERVER_PORT, () => {
