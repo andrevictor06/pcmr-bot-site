@@ -1,21 +1,23 @@
-
 function consultaFigurinhas(){
-    let div_imagens = document.getElementById("div_imagens")
     console.log("Bora");
-    div_imagens.innerHTML = ""
-    fetch("/figurinhas").then( (data)=> data.json()).then( (data)=> {
+    $("#div_imagens").html("")
+    $("#div_imagens").hide()
+    fetch("http://localhost:5858/figurinhas").then( (data)=> data.json()).then( (data)=> {
 
-    data.chunk(5).forEach(lista => {
-        let html = '<div>'
-        div_imagens.innerHTML = div_imagens.innerHTML + ``
-        lista.forEach(element => {
-            html = html + `<div><label>${element.split(".")[0]}</label><div class='div-image'><img src="/images/figurinhas/${element}" alt="" srcset=""/></div></div>`
-        }); 
-        html = html + `</div>`
-        div_imagens.innerHTML = div_imagens.innerHTML + html
-    });
-       
-        
+    data.forEach(element => {
+        $("#div_imagens").append(`<div class='grid-item'><label>${element.split(".")[0]}</label><div class='div-image'><img src="http://localhost:5858/images/figurinhas/${element}" alt="" srcset=""/></div></div>`)
+    }); 
+
+    // jQuery
+    setTimeout(()=>{
+        $("#div_imagens").show()
+        $('.grid').masonry({
+            itemSelector: '.grid-item',
+            columnWidth: 200,
+            percentPosition: true
+        });
+    }, 25)
+    
     }).catch(() => {})
 }
 
