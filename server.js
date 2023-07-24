@@ -10,14 +10,14 @@ function init() {
     const app = express()
 
     app.set('views', './views')
-    app.engine('html', squirrelly.renderFile)
+    app.engine('html', squirrelly.__express)
 
     app.use(helmet({
         contentSecurityPolicy: {
             directives: {
                 "script-src": ["'self'", "code.jquery.com", "unpkg.com", "cdnjs.cloudflare.com"],
                 "style-src": ["'self'", "unpkg.com", "cdnjs.cloudflare.com"],
-                "img-src": ["'self'", process.env.BOT_URL],
+                "img-src": ["'self'", new URL(process.env.BOT_URL).host],
                 "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null
             },
         },

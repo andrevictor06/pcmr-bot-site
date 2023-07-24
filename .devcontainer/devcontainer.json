@@ -6,11 +6,11 @@
 	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
 
 	"runArgs": [
-		"--network=pcmr",
-		"--add-host=pcmrbot:172.18.0.3"
+		"--name", "pcmrbot-site",
+		"--network=pcmrbot_net"
 	]
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
+	// Features to add to the dev container. More i'nfo: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
