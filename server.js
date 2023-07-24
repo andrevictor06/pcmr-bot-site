@@ -13,13 +13,7 @@ function init() {
 
     app.set('views', './views')
     app.engine('html', squirrelly.__express)
-    app.use(cookieSession({
-        name: 'session',
-        keys:  ['user_session', 'logged_in'],
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    }))
-    app.use(cookieParser());
-
+    
     app.use(helmet({
         contentSecurityPolicy: {
             directives: {
@@ -31,6 +25,12 @@ function init() {
         },
         crossOriginEmbedderPolicy: false
     }))
+    app.use(cookieSession({
+        name: 'session',
+        keys:  ['user_session', 'logged_in'],
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }))
+    app.use(cookieParser());
     app.use(bodyParser.json())
     app.use(hpp())
 
