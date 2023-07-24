@@ -5,12 +5,20 @@ const bodyParser = require('body-parser')
 const helmet = require("helmet")
 const hpp = require('hpp')
 const squirrelly = require("squirrelly")
+const cookieSession = require('cookie-session')
+const cookieParser = require("cookie-parser");
 
 function init() {
     const app = express()
 
     app.set('views', './views')
     app.engine('html', squirrelly.__express)
+    app.use(cookieSession({
+        name: 'session',
+        keys:  ['user_session', 'logged_in'],
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }))
+    app.use(cookieParser());
 
     app.use(helmet({
         contentSecurityPolicy: {
