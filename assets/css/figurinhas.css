@@ -1,15 +1,4 @@
-@font-face {
-    font-family: 'Gotham';
-    src: URL('../fonts/Gotham-Light.ttf') format('truetype');
-}
-
-body {
-    font-size: large;
-    font-family: 'Gotham';
-    font-weight: bold;
-    background: #0A1725;
-    color: #C1D3d3;
-}
+@import url("main.css");
 
 #div_imagens>div {
     display: flex;
