@@ -6,7 +6,8 @@
 	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
 
 	"runArgs": [
-		"--network=pcmr"
+		"--network=pcmr",
+		"--add-host=pcmrbot:172.18.0.3"
 	]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
