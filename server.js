@@ -26,7 +26,9 @@ function init() {
     app.use(bodyParser.json())
     app.use(hpp())
 
-    app.use("/", express.static("./assets"))
+    if (process.env.ENVIRONMENT == "DES") {
+        app.use("/", express.static("./assets"))
+    }
     initRoutes(app, "./routes") // views
     // initRoutes(app, "./api") // api
 
