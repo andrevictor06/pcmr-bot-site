@@ -12,57 +12,44 @@ function init() {
     const app = express()
 
     app.set('views', './views')
-    app.engine('html', squirrelly.renderFile)
+    app.engine('html', squirrelly.__express)
+    
+    app.use(helmet({
+        contentSecurityPolicy: {
+            directives: {
+                "script-src": ["'self'", "code.jquery.com", "unpkg.com", "cdnjs.cloudflare.com"],
+                "style-src": ["'self'", "unpkg.com", "cdnjs.cloudflare.com"],
+                "img-src": ["'self'", new URL(process.env.BOT_URL).host],
+                "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null
+            },
+        },
+        crossOriginEmbedderPolicy: false
+    }))
     app.use(cookieSession({
         name: 'session',
         keys:  ['user_session', 'logged_in'],
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }))
     app.use(cookieParser());
-
-    app.use(helmet({
-        contentSecurityPolicy: {
-            directives: {
-                "script-src": ["'self'", "code.jquery.com", "unpkg.com", "cdnjs.cloudflare.com"],
-                "style-src": ["'self'", "unpkg.com", "cdnjs.cloudflare.com"],
-                "img-src": ["'self'", process.env.BOT_URL],
-                "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null
-            },
-        },
-        crossOriginEmbedderPolicy: false
-    }))
     app.use(bodyParser.json())
     app.use(express.urlencoded());
     app.use(hpp())
 
-    /*app.all('/*', (req, res, next) => {
-        console.log(req.path, " req.path");
-        if(req.path == "/login" || validacaoCookieSession(req.cookies)){
-            next()    
-        }else{
-            res.redirect("/login")
-        }
-    });*/
-    app.use("/", express.static("./assets"))
+    if (process.env.ENVIRONMENT == "DES") {
+        app.use("/", express.static("./assets"))
+    }
+  
     initRoutes(app, "./routes") // views
-    // initRoutes(app, "./api") // api
+    // initRoutes(app, "./api", "/api/") // api
 
     app.listen(process.env.SERVER_PORT, () => {
         console.log(`Server UP on port ${process.env.SERVER_PORT}`)
     })
 }
 
-function requireAuthentication(req, res, next) {
-        if(validacaoCookieSession(req.cookies)){
-            next()    
-        }else{
-            res.redirect("/login")
-        }
-    }
-
-function initRoutes(app, basePath) {
+function initRoutes(app, dirPath, urlPath = "/") {
     try {
-        fs.readdirSync(basePath).forEach((file) => {
+        fs.readdirSync(dirPath).forEach((file) => {
             const route = require(path.join(__dirname, 'routes', file))
 
             if (route.init) {
@@ -71,7 +58,8 @@ function initRoutes(app, basePath) {
                 console.log(`A rota ${file} não possui uma função 'init'.`)
             }
 
-            const routePath = '/' + path.basename(file, path.extname(file))
+
+            const routePath = urlPath + path.basename(file, path.extname(file))
             if(routePath == "/login"){
                 app.use(routePath, route.router)
             }else{
@@ -81,6 +69,13 @@ function initRoutes(app, basePath) {
     } catch (error) { console.error(error) }
 }
 
+function requireAuthentication(req, res, next) {
+    if(validacaoCookieSession(req.cookies)){
+        next()    
+    }else{
+        res.redirect("/login")
+    }
+}
 function validacaoCookieSession(cookie){
     if(cookie.user_session == "email@email.com")
         return true
