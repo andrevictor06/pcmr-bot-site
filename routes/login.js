@@ -5,7 +5,7 @@ const router = express.Router()
 router.get("/", async (req, res) => {
     try {
         if(await validacaoCookieSession(req.cookies)){
-            res.render("site/index.html")
+            res.redirect("index")
         }else{
             res.clearCookie("user_session")
             res.clearCookie("logged_in")

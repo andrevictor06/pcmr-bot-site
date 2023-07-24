@@ -35,15 +35,30 @@ function init() {
     app.use(express.urlencoded());
     app.use(hpp())
 
+    /*app.all('/*', (req, res, next) => {
+        console.log(req.path, " req.path");
+        if(req.path == "/login" || validacaoCookieSession(req.cookies)){
+            next()    
+        }else{
+            res.redirect("/login")
+        }
+    });*/
     app.use("/", express.static("./assets"))
     initRoutes(app, "./routes") // views
     // initRoutes(app, "./api") // api
-
 
     app.listen(process.env.SERVER_PORT, () => {
         console.log(`Server UP on port ${process.env.SERVER_PORT}`)
     })
 }
+
+function requireAuthentication(req, res, next) {
+        if(validacaoCookieSession(req.cookies)){
+            next()    
+        }else{
+            res.redirect("/login")
+        }
+    }
 
 function initRoutes(app, basePath) {
     try {
@@ -57,9 +72,19 @@ function initRoutes(app, basePath) {
             }
 
             const routePath = '/' + path.basename(file, path.extname(file))
-            app.use(routePath, route.router)
+            if(routePath == "/login"){
+                app.use(routePath, route.router)
+            }else{
+                app.use(routePath, requireAuthentication, route.router)
+            }
         })
     } catch (error) { console.error(error) }
+}
+
+function validacaoCookieSession(cookie){
+    if(cookie.user_session == "email@email.com")
+        return true
+    return false
 }
 
 module.exports = {
