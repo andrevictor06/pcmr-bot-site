@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <title>Figurinhas - PC Master Race Bot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="css/figurinhas.css">
+</head>
+
+<body>
+    <div>
+        <h1 style="font-weight: bold;">Lista de Figurinhas Disponíveis</h1>
+    </div>
+    <div div class="grid" id="div_imagens">
+        {{@each(it.figurinhas) => figurinha}}
+        <div class='grid-item'>
+            <label>{{figurinha.split(".")[0]}}</label>
+            <div class='div-image'>
+                <img class="image" src="{{it.botUrl}}/images/figurinhas/{{figurinha}}" alt="" srcset="" />
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="js/figurinhas.js"></script>
+
+</html>

@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Gotham';
+    src: URL('../fonts/Gotham-Light.ttf') format('truetype');
+}
+
+body {
+    font-size: large;
+    font-family: 'Gotham';
+    font-weight: bold;
+    background: #0A1725;
+    color: #C1D3d3;
+}
+
+#div_imagens>div {
+    display: flex;
+}
+
+#div_imagens>div {
+    display: grid;
+    border-style: solid;
+    border-color: #C1D3d3;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    width: 20%;
+}
+
+#div_imagens * img {
+    max-height: 10rem;
+    max-width: 10rem;
+}
+
+.div-image {
+    margin: auto;
+    width: 50%;
+}
