@@ -34,3 +34,7 @@ body {
     margin: auto;
     width: 50%;
 }
+
+.title {
+    font-weight: bold;
+}
