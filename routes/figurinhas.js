@@ -5,7 +5,7 @@ const router = express.Router()
 router.get("/", async (req, res) => {
     try {
         const botUrl = process.env.BOT_URL
-        const response = await axios.get(botUrl + "/figurinhas", { timeout: 5000 })
+        const response = await axios.get(botUrl + "/bot/figurinhas", { timeout: 5000 })
         const figurinhas = response.data
 
         res.render("figurinhas/figurinhas.html", {
