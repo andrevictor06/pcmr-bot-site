@@ -12,11 +12,18 @@ function init() {
     app.set('views', './views')
     app.engine('html', squirrelly.renderFile)
 
-    if (process.env.ENVIRONMENT == "PRD") {
-        app.use(helmet())
-        app.use(bodyParser.json())
-        app.use(hpp())
-    }
+    app.use(helmet({
+        contentSecurityPolicy: {
+            directives: {
+                "script-src": ["'self'", "code.jquery.com", "unpkg.com"],
+                "style-src": ["'self'", "unpkg.com"],
+                "img-src": ["'self'", process.env.BOT_URL]
+            },
+        },
+        crossOriginEmbedderPolicy: false
+    }))
+    app.use(bodyParser.json())
+    app.use(hpp())
 
     app.use("/", express.static("./assets"))
     initRoutes(app, "./routes") // views
