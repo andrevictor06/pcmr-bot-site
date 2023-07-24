@@ -19,7 +19,7 @@ function init() {
             directives: {
                 "script-src": ["'self'", "code.jquery.com", "unpkg.com", "cdnjs.cloudflare.com"],
                 "style-src": ["'self'", "unpkg.com", "cdnjs.cloudflare.com"],
-                "img-src": ["'self'", new URL(process.env.BOT_URL).host],
+                "img-src": ["'self'", process.env.BOT_URL ? new URL(process.env.BOT_URL).host : ""],
                 "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null
             },
         },
