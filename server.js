@@ -17,7 +17,8 @@ function init() {
             directives: {
                 "script-src": ["'self'", "code.jquery.com", "unpkg.com"],
                 "style-src": ["'self'", "unpkg.com"],
-                "img-src": ["'self'", process.env.BOT_URL]
+                "img-src": ["'self'", process.env.BOT_URL],
+                "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null
             },
         },
         crossOriginEmbedderPolicy: false
