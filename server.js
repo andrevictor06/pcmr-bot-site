@@ -30,7 +30,7 @@ function init() {
         app.use("/", express.static("./assets"))
     }
     initRoutes(app, "./routes") // views
-    // initRoutes(app, "./api") // api
+    // initRoutes(app, "./api", "/api/") // api
 
 
     app.listen(process.env.SERVER_PORT, () => {
@@ -38,9 +38,9 @@ function init() {
     })
 }
 
-function initRoutes(app, basePath) {
+function initRoutes(app, dirPath, urlPath = "/") {
     try {
-        fs.readdirSync(basePath).forEach((file) => {
+        fs.readdirSync(dirPath).forEach((file) => {
             const route = require(path.join(__dirname, 'routes', file))
 
             if (route.init) {
@@ -49,7 +49,7 @@ function initRoutes(app, basePath) {
                 console.log(`A rota ${file} não possui uma função 'init'.`)
             }
 
-            const routePath = '/' + path.basename(file, path.extname(file))
+            const routePath = urlPath + path.basename(file, path.extname(file))
             app.use(routePath, route.router)
         })
     } catch (error) { console.error(error) }
