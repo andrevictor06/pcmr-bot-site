@@ -7,6 +7,9 @@ router.get("/", async (req, res) => {
         if(await validacaoCookieSession(req.cookies)){
             res.render("site/index.html")
         }else{
+            res.clearCookie("user_session")
+            res.clearCookie("logged_in")
+            res.clearCookie("teste")
             res.render("login/login.html")
         }
         
@@ -20,7 +23,7 @@ router.post("/auth", async (req, res) => {
     try {
         const {username , password} = req.body;
         if( await validacaoUsuarioSenha(username, password)){
-            res.cookie("user_session", "teste516")
+            res.cookie("user_session", username)
             res.cookie("logged_in", "1")
             res.cookie("teste", "1")
         }
@@ -32,11 +35,14 @@ router.post("/auth", async (req, res) => {
 })
 
 async function validacaoCookieSession(cookie){
-
-    return true
+    if(cookie.user_session == "email@email.com")
+        return true
+    return false
 }
 
-async function validacaoUsuarioSenha(){
+async function validacaoUsuarioSenha(username, password){
+    if(username == "email@email.com")
+        return true
     return false
 }
 
