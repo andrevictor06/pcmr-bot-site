@@ -32,6 +32,7 @@ function init() {
         crossOriginEmbedderPolicy: false
     }))
     app.use(bodyParser.json())
+    app.use(express.urlencoded());
     app.use(hpp())
 
     app.use("/", express.static("./assets"))
