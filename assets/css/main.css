@@ -1,3 +1,9 @@
+:root {
+    --main-bg-color: #0A1725;
+    --main-text-color: #C1D3D3;
+    --main-font-family: 'Gotham';
+}
+
 @font-face {
     font-family: 'Gotham';
     src: URL('../fonts/Gotham-Light.ttf') format('truetype');
@@ -5,8 +11,9 @@
 
 body {
     font-size: large;
-    font-family: 'Gotham';
+    font-family: var(--main-font-family);
     font-weight: bold;
-    background: #0A1725;
-    color: #C1D3d3;
+    background: var(--main-bg-color);
+    color: var(--main-text-color);
 }
+
