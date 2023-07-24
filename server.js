@@ -32,14 +32,15 @@ function init() {
     }))
     app.use(cookieParser());
     app.use(bodyParser.json())
+    app.use(express.urlencoded());
     app.use(hpp())
 
     if (process.env.ENVIRONMENT == "DES") {
         app.use("/", express.static("./assets"))
     }
+  
     initRoutes(app, "./routes") // views
     // initRoutes(app, "./api", "/api/") // api
-
 
     app.listen(process.env.SERVER_PORT, () => {
         console.log(`Server UP on port ${process.env.SERVER_PORT}`)
@@ -57,10 +58,28 @@ function initRoutes(app, dirPath, urlPath = "/") {
                 console.log(`A rota ${file} não possui uma função 'init'.`)
             }
 
+
             const routePath = urlPath + path.basename(file, path.extname(file))
-            app.use(routePath, route.router)
+            if(routePath == "/login"){
+                app.use(routePath, route.router)
+            }else{
+                app.use(routePath, requireAuthentication, route.router)
+            }
         })
     } catch (error) { console.error(error) }
+}
+
+function requireAuthentication(req, res, next) {
+    if(validacaoCookieSession(req.cookies)){
+        next()    
+    }else{
+        res.redirect("/login")
+    }
+}
+function validacaoCookieSession(cookie){
+    if(cookie.user_session == "email@email.com")
+        return true
+    return false
 }
 
 module.exports = {
