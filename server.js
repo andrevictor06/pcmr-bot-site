@@ -10,7 +10,6 @@ const cookieParser = require("cookie-parser");
 
 function init() {
     const app = express()
-
     app.set('views', './views')
     app.engine('html', squirrelly.__express)
     
@@ -34,14 +33,14 @@ function init() {
     app.use(bodyParser.json())
     app.use(express.urlencoded());
     app.use(hpp())
-
+    app.use(requireAuthentication)
     if (process.env.ENVIRONMENT == "DES") {
         app.use("/", express.static("./assets"))
     }
   
     initRoutes(app, "./routes") // views
     // initRoutes(app, "./api", "/api/") // api
-
+ 
     app.listen(process.env.SERVER_PORT, () => {
         console.log(`Server UP on port ${process.env.SERVER_PORT}`)
     })
@@ -60,24 +59,28 @@ function initRoutes(app, dirPath, urlPath = "/") {
 
 
             const routePath = urlPath + path.basename(file, path.extname(file))
-            if(routePath == "/login"){
-                app.use(routePath, route.router)
-            }else{
-                app.use(routePath, requireAuthentication, route.router)
-            }
+            app.use(routePath, route.router)
+            
         })
     } catch (error) { console.error(error) }
 }
 
 function requireAuthentication(req, res, next) {
-    if(validacaoCookieSession(req.cookies)){
-        next()    
+    res.setHeader('charset', 'utf-8')
+    res.setHeader('hh-time', Date.now())
+    if(validacaoCookieSession(req)){
+        next()
     }else{
         res.redirect("/login")
     }
 }
-function validacaoCookieSession(cookie){
-    if(cookie.user_session == "email@email.com")
+
+function validSessionPaths(req){
+    return (req.path.startsWith("/login") || req.path.startsWith("/css") || req.path.startsWith("/fonts") || req.path.startsWith("/img"))
+}
+
+function validacaoCookieSession(req){
+    if(validSessionPaths(req) || ( req.cookies && req.cookies.user_session == "email@email.com"))
         return true
     return false
 }
