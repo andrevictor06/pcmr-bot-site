@@ -42,10 +42,10 @@ function init() {
     initRoutes(app, "./routes") // views
     // initRoutes(app, "./api", "/api/") // api
     
-    app.use("*", (req, res)=>{
+    /*app.use("*", (req, res)=>{
         res.status = 404
         res.redirect("404")
-    })
+    })*/
     app.listen(process.env.SERVER_PORT, () => {
         console.log(`Server UP on port ${process.env.SERVER_PORT}`)
     })
