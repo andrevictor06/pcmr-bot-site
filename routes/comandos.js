@@ -5,14 +5,17 @@ const router = express.Router()
 router.get("/", async (req, res) => {
     try {
         const botUrl = process.env.URL_BOT
-        const response = await axios.get(botUrl + "/bot/figurinhas", { timeout: 5000, headers: {
+        const response = await axios.get(botUrl + "/bot/comandos", { timeout: 5000, headers: {
             Authorization : "Bearer " + process.env.TOKEN_AUTHORIZATION_API
         } })
-        const figurinhas = response.data
-
-        res.render("figurinhas/figurinhas.html", {
+        const comandos = response.data
+        const APP_NAME  = process.env.APP_NAME
+        const APP_ICON  = process.env.APP_ICON
+        res.render("comandos/comandos.html", {
             botUrl,
-            figurinhas
+            comandos,
+            APP_NAME,
+            APP_ICON
         })
     } catch (error) {
         console.error(error)
