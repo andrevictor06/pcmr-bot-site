@@ -2,32 +2,36 @@
 <html lang="pt-BR">
 
 <head>
-    <title>Figurinhas - PC Master Race Bot</title>
+    <title>Áudios - {{it.APP_NAME}}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="img/favicon.png">
-    <link rel="stylesheet" type="text/css" href="css/figurinhas.css">
+    <link rel="icon" type="image/png" href="{{it.APP_ICON}}">
+    <link rel="stylesheet" type="text/css" href="css/audios.css">
 </head>
 
 <body>
     <div>
-        <h1 class="title">Lista de Figurinhas Disponíveis</h1>
+        <h1 class="title">Lista de Áudios Disponíveis</h1>
     </div>
     <div div class="grid" id="div_imagens">
-        {{@each(it.figurinhas) => figurinha}}
+        {{@each(it.audios) => audio}}
         <div class='grid-item'>
-            <strong>{{figurinha.split(".")[0]}}</strong>
+            <strong>{{audio.split(".")[0]}}</strong>
             <div class='div-image'>
-                <img class="image" src="{{it.botUrl}}/images/figurinhas/{{figurinha}}" alt="" srcset="" />
+                <audio controls preload="metadata">
+                    <source src="{{it.botUrl}}/bot/audios/{{audio}}" type="audio/mpeg">
+                    Your browser does not support the audio tag.
+                </audio>
             </div>
         </div>
         {{/each}}
     </div>
+    
 </body>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"
     integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<script type="text/javascript" src="js/figurinhas.js"></script>
+<script type="text/javascript" src="js/audios.js"></script>
 
 </html>

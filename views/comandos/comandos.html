@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <title>Comandos - {{it.APP_NAME}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{it.APP_ICON}}">
+    <link rel="stylesheet" type="text/css" href="css/comandos.css">
+</head>
+
+<body>
+    <div>
+        <h1 class="title">Lista de Comandos Disponíveis</h1>
+    </div>
+    <div class="search">
+        <input class="form-control" type="text" placeholder="Search" id="input-search" name="input-search">
+    </div>
+
+    <ul class="list-group bg-dark " id="lista-comandos">
+        {{@each(it.comandos) => comando}}
+        <li class="list-group-item">
+            <div>
+                <strong>{{comando.name}}</strong>
+            </div>
+            
+            <div>
+                <label>{{comando.value}}</label>    
+            </div>
+        </li>
+        
+        {{/each}}
+    </ul>
+    
+</body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/comandos.js"></script>
+</html>

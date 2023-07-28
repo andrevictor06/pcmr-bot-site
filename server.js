@@ -18,8 +18,9 @@ function init() {
             directives: {
                 "script-src": ["'self'", "code.jquery.com", "unpkg.com", "cdnjs.cloudflare.com"],
                 "style-src": ["'self'", "unpkg.com", "cdnjs.cloudflare.com"],
-                "img-src": ["'self'", process.env.BOT_URL ? new URL(process.env.BOT_URL).host : ""],
-                "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null
+                "img-src": ["'self'", process.env.PCMR_DOMAIN ? new URL(process.env.PCMR_DOMAIN).host : ""],
+                "upgrade-insecure-requests": process.env.ENVIRONMENT == "PRD" ? [] : null,
+                "media-src": ["'self'", process.env.PCMR_DOMAIN ? new URL(process.env.PCMR_DOMAIN).host : ""]
             },
         },
         crossOriginEmbedderPolicy: false
@@ -40,7 +41,11 @@ function init() {
   
     initRoutes(app, "./routes") // views
     // initRoutes(app, "./api", "/api/") // api
- 
+    
+    app.use("*", (req, res)=>{
+        res.status = 404
+        res.redirect("404")
+    })
     app.listen(process.env.SERVER_PORT, () => {
         console.log(`Server UP on port ${process.env.SERVER_PORT}`)
     })
